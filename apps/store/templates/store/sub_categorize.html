@@ -1,0 +1,20 @@
+{% for product in sub_products %}
+<div class="col-lg-4 col-sm-6">
+    <div class="product-item">
+        <div class="pi-pic">
+            <!-- <div class="tag-sale">ON SALE</div> -->
+            {% for image in product.image_of_product.all %}
+            <a href="/product_page/{{product.id}}"><img src="{{image.image.url}}" alt="{{image.image.name}}"></a> 
+            {% endfor %}
+            <div class="pi-links">
+                <a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
+                <a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
+            </div>
+        </div>
+        <div class="pi-text">
+            <h6>${{product.price}}</h6>
+            <p>{{product.name}}</p>
+        </div>
+    </div>
+</div>
+{% endfor %}

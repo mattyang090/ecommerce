@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="zxx">
+<head>
+	<title>Golf Store</title>
+	<meta charset="UTF-8">
+	<meta name="description" content=" Divisima | eCommerce Template">
+	<meta name="keywords" content="divisima, eCommerce, creative, html">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Favicon -->
+
+	<!-- Google Font -->
+	<link href="https://fonts.googleapis.com/css?family=Josefin+Sans:300,300i,400,400i,700,700i" rel="stylesheet">
+
+
+	{% load static %}
+	<!-- Stylesheets -->
+	<link rel="stylesheet" href="{% static 'store/css/bootstrap.min.css' %}"/>
+	<link rel="stylesheet" href="{% static 'store/css/font-awesome.min.css' %}"/>
+	<link rel="stylesheet" href="{% static 'store/css/flaticon.css' %}"/>
+	<link rel="stylesheet" href="{% static 'store/css/slicknav.min.css' %}"/>
+	<link rel="stylesheet" href="{% static 'store/css/jquery-ui.min.css' %}"/>
+	<link rel="stylesheet" href="{% static 'store/css/owl.carousel.min.css' %}"/>
+	<link rel="stylesheet" href="{% static 'store/css/animate.css' %}"/>
+    <link rel="stylesheet" href="{% static 'store/css/style.css' %}"/>
+
+
+	<!--[if lt IE 9]>
+		  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+	  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<![endif]-->
+
+</head>
+<body>
+	<!-- Page Preloder -->
+	<div id="preloder">
+		<div class="loader"></div>
+	</div>
+
+	<!-- Header section -->
+	<header class="header-section">
+		<div class="header-top">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-2 text-center text-lg-left">
+						<!-- logo -->
+						<a href="./index.html" class="site-logo">
+							<img src="img/logo.png" alt="">
+						</a>
+					</div>
+					<div class="col-xl-6 col-lg-5">
+						<form class="header-search-form">
+							<input type="text" placeholder="Search ...">
+							<button><i class="flaticon-search"></i></button>
+						</form>
+					</div>
+					<div class="col-xl-4 col-lg-5">
+						<div class="user-panel">
+							{% if not 'logged_in' in request.session %}
+							<div class="up-item">
+								<i class="flaticon-profile"></i>
+								<a href="/login_register_page">Sign In or Create Account</a>
+							</div>
+							{% endif %}
+							{% if 'logged_in' in request.session %}
+							<div class="up-item">
+								<i class="flaticon-profile"></i>
+								<a href="/log_out">Log Out</a>
+							</div>
+							{% endif %}
+							<div class="up-item">
+								<div class="shopping-card">
+									<i class="flaticon-bag"></i>
+									<span>0</span>
+								</div>
+								<a href="/cart_page">Shopping Cart</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<nav class="main-navbar">
+			<div class="container">
+				<!-- menu -->
+				<ul class="main-menu">
+					<li><a href="/">Home</a></li>
+					<li><a href="/category_page/Clubs">Clubs</a>
+						<ul class="sub-menu">
+							<li><a href="/category_page/Clubs/Driver">Drivers</a></li>
+							<li><a href="/category_page/Clubs/Wood">Woods</a></li>
+							<li><a href="/category_page/Clubs/Irons">Irons</a></li>
+							<li><a href="/category_page/Clubs/Wedge">Wedges</a></li>
+							<li><a href="/category_page/Clubs/Putter">Putters</a></li>
+						</ul>
+					</li>
+					<li><a href="/category_page/Balls">Golf Balls</a>
+						<ul class="sub-menu">
+							<li><a href="/category_page/Balls/Taylormade">Taylormade</a></li>
+							<li><a href="/category_page/Balls/Titleist">Titleist</a></li>
+							<li><a href="/category_page/Balls/Callaway">Callaway</a></li>
+							<li><a href="/category_page/Balls/Bridgestone">Bridgestone</a></li>
+							<li><a href="/category_page/Balls/Volvik">Volvik</a></li>
+						</ul>
+					</li>
+					<li><a href="/category_page/Apparel">Apparel</a>
+						<ul class="sub-menu">
+							<li><a href="/category_page/Apparel/Polo">Polos</a></li>
+							<li><a href="/category_page/Apparel/Sweater">Sweaters</a></li>
+							<li><a href="/category_page/Apparel/Shirt">T-Shirts</a></li>
+							<li><a href="/category_page/Apparel/Shoe">Shoes</a></li>
+						</ul>
+					</li>
+					<li><a href="#">Pages</a>
+						<ul class="sub-menu">
+							<li><a href="/product_page/4">Product Page</a></li>
+							<li><a href="/category_page">Category Page</a></li>
+							<li><a href="/cart_page">Cart Page</a></li>
+							<li><a href="/checkout_page">Checkout Page</a></li>
+							<li><a href="/contact_page">Contact Page</a></li>
+						</ul>
+					</li>
+					<!-- <li><a href="#">Blog</a></li> -->
+				</ul>
+			</div>
+		</nav>
+	</header>
+	<!-- Header section end -->
+
+
+	<!-- Page info -->
+	<div class="page-top-info">
+		<div class="container">
+			<h4>Your cart</h4>
+			<div class="site-pagination">
+				<a href="">Home</a> /
+				<a href="">Your cart</a>
+			</div>
+		</div>
+	</div>
+	<!-- Page info end -->
+
+
+	<!-- checkout section  -->
+	<section class="checkout-section spad">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 order-2 order-lg-1">
+						<div class="cf-title">Payment</div>
+						<form action="/checkout" method="POST" class="checkout-form">
+							{% csrf_token %}
+							<script src="https://checkout.stripe.com/checkout.js"
+							class="stripe-button"
+							data-key="pk_test_EKXnpn1LgICcV4jUoRwxCySb00Rc5HoyBd"
+							data-amount="{{total_price100}}"
+							data-name="Your Order"
+							>
+							</script>
+						</form>
+				</div>
+				<div class="col-lg-4 order-1 order-lg-2">
+					<div class="checkout-cart">
+						<h3>Your Cart</h3>
+						<ul class="product-list">
+							{% for product in cart %}
+							<li>
+								<div class="pl-thumb"><img src="{{product.image.url}}" alt="{{product.name}}"></div>
+								<h6>{{product.name}}</h6>
+								<p>${{product.price}}</p>
+							</li>
+							{% endfor %}
+						</ul>
+						<ul class="price-list">
+							<li>Total<span>${{total_price}}</span></li>
+							<li>Shipping<span>free</span></li>
+							<li class="total">Total<span>${{total_price}}</span></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- checkout section end -->
+
+	<!-- Footer section -->
+	<section class="footer-section">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-3 col-sm-6">
+					<div class="footer-widget about-widget">
+						<h2>About</h2>
+						<p>Online golf store selling the Latest and Hottest items in the golf market.</p>
+						<img src="static/store/img/cards.png" alt="">
+					</div>
+				</div>
+				<div class="col-lg-3 col-sm-6">
+					<div class="footer-widget about-widget">
+						<h2>Questions</h2>
+						<ul>
+							<li><a href="">Track Orders</a></li>
+							<li><a href="">Returns</a></li>
+							<li><a href="">Shipping</a></li>
+						</ul>
+						<ul>
+							<li><a href="">Payment</a></li>
+							<li><a href="">Terms of Use</a></li>
+							<li><a href="">FAQ</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-lg-3 col-sm-6">
+					<div class="footer-widget about-widget">
+						<h2>Partnerships</h2>
+						<ul>
+							<li><a href="">Taylormade</a></li>
+							<li><a href="">Titleist</a></li>
+							<li><a href="">Callaway</a></li>
+							<li><a href="">Bridgestone</a></li>
+							<li><a href="">Ping</a></li>
+							<li><a href="">Cleveland</a></li>
+						</ul>
+						<ul>
+							<li><a href="">Cobra</a></li>
+							<li><a href="">Mizuno</a></li>
+							<li><a href="">Srixon</a></li>
+							<li><a href="">Wilson</a></li>
+							<li><a href="">Adidas</a></li>
+							<li><a href="">Nike</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-lg-3 col-sm-6">
+					<div class="footer-widget contact-widget">
+						<h2>Contact</h2>
+						<div class="con-info">
+							<span>O.</span>
+							<p>12345 Golf Ave Golf City, CA 12345, P.O. BOX 68</p>
+						</div>
+						<div class="con-info">
+							<span>C.</span>
+							<p>(123) 456-7890</p>
+						</div>
+						<div class="con-info">
+							<span>E.</span>
+							<p>golf@mail.com</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="social-links-warp">
+			<div class="container">
+				<div class="social-links">
+					<a href="" class="instagram"><i class="fa fa-instagram"></i><span>instagram</span></a>
+					<a href="" class="google-plus"><i class="fa fa-google-plus"></i><span>g+plus</span></a>
+					<a href="" class="pinterest"><i class="fa fa-pinterest"></i><span>pinterest</span></a>
+					<a href="" class="facebook"><i class="fa fa-facebook"></i><span>facebook</span></a>
+					<a href="" class="twitter"><i class="fa fa-twitter"></i><span>twitter</span></a>
+					<a href="" class="youtube"><i class="fa fa-youtube"></i><span>youtube</span></a>
+					<a href="" class="tumblr"><i class="fa fa-tumblr-square"></i><span>tumblr</span></a>
+				</div>
+
+<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --> 
+<p class="text-white text-center mt-5">Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a></p>
+<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+
+			</div>
+		</div>
+	</section>
+	<!-- Footer section end -->
+
+
+
+	<!--====== Javascripts & Jquery ======-->
+	<script src="{% static 'store/js/jquery-3.2.1.min.js' %}"></script>
+	<script src="{% static 'store/js/bootstrap.min.js' %}"></script>
+	<script src="{% static 'store/js/jquery.slicknav.min.js' %}"></script>
+	<script src="{% static 'store/js/owl.carousel.min.js' %}"></script>
+	<script src="{% static 'store/js/jquery.nicescroll.min.js' %}"></script>
+	<script src="{% static 'store/js/jquery.zoom.min.js' %}"></script>
+	<script src="{% static 'store/js/jquery-ui.min.js' %}"></script>
+    <script src="{% static 'store/js/main.js' %}"></script>
+	<script src="{% static 'store/js/template.js' %}"></script>
+	
+	</body>
+</html>
